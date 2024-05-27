@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ book.name }}{% endblock %}
+
+{% block main %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/main/book.css' %}">
+        
+    <!-- Проверка автора и пользователя запроса -->
+    <!-- Публикация -->
+    {% if current_user == book.autor %}
+            <form method="post" style="width: 96vw; margin-left: 3%;">
+                {% csrf_token %}
+                <input style="margin-top: 10px;" name="public" type="submit" value="{{ btnValueFalse }}">
+            </form>
+    {% endif %}
+    
+    <!-- Кнопка лайка книги -->
+    <form method="post" style="width: 96vw; margin-left: 3%;">
+        {% csrf_token %}
+        <input style="margin-top: 10px;" name="likeBookBtn" type="submit" value="Лайк">
+    </form>
+
+    <!-- ❤️ -->
+    {% if current_user == book.autor %}
+        {% if book.published == False %}
+            <form method="post" enctype="multipart/form-data" style="width: 96vw; margin-left: 3%;">
+                {% csrf_token %}
+                {{ formUpdateBook }}
+                <input style="margin-top: 10px;" name="updateBook" type="submit" value="Изменить">
+            </form>
+        {% endif %}
+    {% endif %}
+
+    {% if book.published == False %}
+        <a href="{% url 'createChapter' bookId=book.id %}" style="margin-left: 45%; font-size: 50px;">Добавить главу</a>
+    {% endif %}
+        
+    {% if current_user == book.autor %}
+    <form method="post" style="width: 96vw; margin-left: 3%;">
+        {% csrf_token %}
+        <input style="margin-top: 10px;" name="deleteBook" type="submit" value="Удалить книгу">
+    </form>
+    {% endif %}
+
+   
+    <div class="container-fluid head">
+        <div class="row d-flex justify-content-left">
+            <h1 class="text-h1 font-color text-center title">{{ book.name }}</h1>
+            <h3 class="text-h1 font-color text-center autorName">{{ book.autor.first_name }}</h3>
+        </div>
+    </div>
+
+    <div class="booksConteinerMain">
+        <div class="container-fluid booksConteiner">
+            <div class="text-h1 font-color text-start"><b>Жанр(ы): </b>
+                {% for elem in book.bookGenres.all %}
+                    {{ elem }}{% if forloop.last == False %},{% else %}.{% endif %}
+                {% endfor %}
+            </div>
+            <div class="text-h1 font-color text-start"><b>Тематика: </b>{{ book.topic }}.</div>
+            <div class="text-h1 font-color text-start"><b>Возрастное ограничение: </b>{{ book.ageLimit }}+</div>
+            <div class="text-h1 font-color text-start"><b>Описание: </b>{{ book.description }}</div>
+            <div class="text-h1 font-color text-start"><b>Краткое описание сюжета: </b>{{ book.shortDescription }}</div>  
+        </div>
+    </div>
+
+    <div class="booksConteinerMain">
+        <div class="container-fluid booksConteiner">
+            <div class="commentList">
+                <form class="commentForm" method="post">
+                    {% csrf_token %}
+                    <div style="margin-left: 1%;">Оставить комментарий:</div>
+                    {{ formComment.text }}</br>
+                    <div class="btnBox"><input class="btn btn-info" name="comment" type="submit" value="Отправить"></div>
+                </form>
+            </div>
+            {% for el in commentsBook %}
+                <div class="commentList">
+                    <div class="commentHead">
+                        <div class="commentAutor">{{ el.user.first_name }}:</div>
+                        <div class="commentDateTime">{{ el.date }}</div>
+                    </div>
+                    <p>{{ el.text }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="booksConteinerMain">
+        <div class="container-fluid booksConteiner">
+            {% for el in bookChapters %}
+                <div class="chapterBox">
+
+                    <div class="screensaverBox">
+                        <img src="/media/{{ el.screensaver }}" class="screensaver">
+                        <div class="shadowImg"></div>
+                    </div>
+
+                    <h1 class="text-h1 font-color text-center bookName">{{ el.name }}</h1>
+                    <div class="textChapter">{{ el.text|linebreaks }}</div>
+                    
+                    {% if book.published == False %}
+                    <a href="{% url 'updateChapter' bookId=book.id chapterId=el.id %}">Изменить</a>
+                    <a href="{% url 'deleteChapter' bookId=book.id chapterId=el.id %}">Удалить</a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

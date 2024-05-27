@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block title %}Профиль{% endblock %}
+
+{% block main %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/registration/profile.css' %}">
+
+<!-- {% if user.groups.all.0.name == "admin" %}
+  This is admin
+{% endif %}
+{% if user.groups.all.0.name == "regular" %}
+  This is regular
+{% endif %} -->
+
+<div class="container-fluid blockProfile">
+  <div class="row d-flex justify-content-center mt-1" style="width: 100%;">
+        {% for obj in userProfile %}    
+      <div class="col-4">
+          <div class="profileConteiner row justify-content-center align-items-center">
+            <div>
+                {% if obj.photo == "" %}
+                <img src="{% static 'img/profile/nonPhoto.png' %}" class="rounded-circle profileImg img-responsive" alt="">
+                {% else %}
+                <img src="/media/{{ obj.photo }}" class="rounded-circle profileImg img-responsive" alt="">
+                {% endif %}
+                <div class="text-center textNowrap">{{ obj.user.first_name }}</div>
+            </div>
+          </div>
+      </div>
+
+      <div class="col-7 p-3">
+        <div class="descriptionProfileConteiner">
+          
+          <div class="elProfile">
+            <div class="row justify-content-start ms-1 me-1 gy-1" style="text-wrap: wrap;">
+              <div class="signature"><b>О себе: </b>{{ obj.AboutMe }}</div> 
+            </div>
+          </div>
+          <div class="elProfile">
+            <div class="row align-items-start ms-1 me-1 gy-1">
+              <div class="col-1 signature"><b>Предпочитаемые жанры: </b></div>
+              {% for item in obj.bookGenres.all %}
+                  <div class="col-1 bookGenres">{{ item }}</div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="elProfile">
+            <div class="row align-items-start ms-1 me-1 gy-1">
+              <div class="col-1 signature"><b>Контакты: </b></div>
+              <div style='cursor: pointer;' class="col-1 contacts" id="VK" onclick="copyToClipboard('#VK')" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Нажмите чтобы скопировать">{{ obj.VK }}</div>
+              <div style='cursor: pointer;' class="col-1 contacts" id="Instagram" onclick="copyToClipboard('#Instagram')" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Нажмите чтобы скопировать">{{ obj.Instagram }}</div>
+              <div style='cursor: pointer;' class="col-1 contacts" id="Telegram" onclick="copyToClipboard('#Telegram')" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Нажмите чтобы скопировать">{{ obj.Telegram }}</div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      
+  </div>
+</div>
+
+<div class="container-fluid">
+    {% for el in idUserPage %}
+    <div class="row d-flex justify-content-left booksListBtnBox">
+      <a href="{% url 'profileAnyUser' id=el filter='Written' %}" class="col-1 justify-content-center text-center booksListBtn"><b>Опубликованные</b></a>
+      <a href="{% url 'profileAnyUser' id=el filter='Liked' %}" class="col-1 justify-content-center text-center booksListBtn"><b>Понравилось</b></a>
+    </div>
+    {% endfor %}
+  </div>
+
+<div class="container-fluid blockBooks">
+  <div class="row d-flex justify-content-left">
+      {% for obj in bookList %}
+          <div class="col-10 container-card justify-content-center cardBook">
+              <div class="card row justify-content-top align-items-center text-center cardBookElemOne" id="{{ obj.name }}">
+                  <a class="cover" href="{% url 'book' id=obj.pk %}"><img src="/media/{{ obj.cover }}" class="cover"></a>
+                  <b class="textBook name">{{ obj.name }}</b>
+                  <div class="row align-items-start genresBox">
+                    <div class="col-1 signatureBook"><b>Жанр(ы): </b></div>
+                    {% for item in obj.bookGenres.all %} 
+                        <div class="col-1 genres">{{ item }}{% if forloop.last == False %},&nbsp;{% else %}.{% endif %}</div>     
+                    {% endfor %}
+                  </div>
+                  <div class="row text-start descriptionBox topic">
+                    <div class="col-1 signatureBook"><b>Тема: </b>{{ obj.topic }}</div> 
+                  </div>
+                  <div class="row text-start descriptionBox">
+                    <div class="col-1 signatureBook shortDescription">{{ obj.shortDescription }}</div> 
+                  </div>
+              </div>
+              <div class="row justify-content-bottom align-items-center text-end cardBookElemTwo">
+                <div class="textBook" style="font-size: 0.7vw;"><b>Дата публикации: </b>{{ obj.dateOfPublication }}</div>
+              </div>
+              
+              <div class="row justify-content-top align-items-center text-start cardBookElemfullDescription">
+                <div class="backImgBox" onclick=CloseShortDescription(this)><img src="{% static 'img/profile/backBtn.png' %}"></div>
+                <div class="textBook" style="font-size: 0.7vw;">{{ obj.shortDescription }}</div>
+              </div>
+              
+          </div>
+      {% empty %}
+      <!-- TODO доделать отсутствие книг -->
+      <div class="col-12 justify-content-center align-items-center booksEmpty">
+        {% autoescape off %}
+          {{ emptyText }}
+        {% endautoescape %}
+      </div>
+      {% endfor %}
+  </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="{% static 'js/profile/profile.js' %}"></script>
+
+{% endblock %}

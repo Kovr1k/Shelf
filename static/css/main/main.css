@@ -1,0 +1,217 @@
+/* Шапка сайта */
+
+.headBlock{
+    margin-bottom: 1.5%;
+    height: 20vh;
+}
+
+.title{
+    font-size: 10vw;
+    color: #e68282;
+    font-family: 'Anticva';
+}
+
+/* Строка поиска */
+
+.searchBlock{
+    margin-bottom: 0.5vh;
+    padding: 0;
+}
+
+.searchBox{
+    margin: 0;
+}
+
+.search{
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    margin-left: 10vw;
+    width: 80vw;
+    height: 5vh;
+    padding: 0;
+}
+
+.search input{
+    width: 80vw;
+    height: 5vh;
+    font-size: 1vw;
+    border-radius: 1vw;
+    border: 0.1vw solid;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+.search input:focus{
+    width: 80vw;
+    height: 5vh;
+    font-size: 1vw;
+    border-radius: 1vw;
+    border: 0.1vw solid;
+    padding: 0;
+    box-shadow: 0px 0px 0px black;
+    background-color: #ffffff;
+}
+
+/* Строка фильтров */
+
+.btn-info{
+    border-color: #212121;
+}
+
+.filterBtn{
+    padding-left: 10%;
+}
+
+.booksListBtn{
+    background-color: #c5a7df;
+    margin-right: 3%;
+    font-size: 1.2vw;
+    border-radius: 3vw;
+    width: 13%;
+    cursor: pointer;
+    scale: 1;
+    transition-property: scale, background-color;
+    transition-duration: 0.5s;
+    text-decoration: none;
+    color: black;
+}
+
+.booksListBtn:hover{
+    scale: 1.1;
+    background-color: blueviolet;
+    color: rgb(204, 156, 0);
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    font-size: 1.2vw;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    font-size: 1vw;
+}
+
+.dropdown-content a {
+    color: black;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+    color: #6bd5f0;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Книжный блок */
+
+.booksConteinerMain{
+    padding-top: 0.5vh;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.booksConteiner{
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-left: 0%;
+    padding-right: 0%;
+    border-radius: 2vw;
+}
+
+.booksBlock{
+    background-color: #d5d8a5;
+    margin-bottom: 1.5vh;
+    padding-top: 0.5vh;
+    width: 90%;
+    border-radius: 2vw;
+}
+
+.booksBox{
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.bookCard{
+    background-color: rgb(121, 58, 112);
+    height: 25vh;
+}
+
+.bookImg{
+    height: 8vw;
+    width: 9vw;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 10%;
+    object-fit:contain;
+    padding-right: 0%;
+    padding-left: 0%;
+    background-color: #c4c79a;
+    border-radius: 1vw;
+}
+
+.bookName{
+    width: 10vw;
+    font-size: 1.6vw;
+    margin-left: 0%;
+    margin-right: 5%;
+    margin-top: 3%;
+    padding-right: 0%;
+    padding-left: 0%;
+    text-wrap: wrap;
+}
+
+.bookParameters{
+    margin-top: 2.25%;
+    font-size: 1.2vw;
+}
+
+.param{
+    margin-top: 1vh;
+    border-radius: 5vw;
+    background-color: #e3e6e8;
+}
+
+.param b{
+    color: #e68282;
+}
+
+.likes{
+    margin-top: -1%;
+    font-size: 1.1vw;
+    padding-right: 5vw;
+    padding-bottom: 3vh;
+}
+
+.likes img{
+    width: 2.5vw;
+}
+
+.age{
+    background-color: aqua;
+}
+
+.autorUrl{
+    color: #ad38e4;
+    text-decoration: none;
+}
+
+.autorUrl:hover{
+    color: #3cf;
+    text-decoration: none;
+}

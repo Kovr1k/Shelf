@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Написать{% endblock %}
+
+{% block main %}
+{% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/main/createBook.css' %}">
+
+    <div class="container-fluid headBlock">
+        <div class="row d-flex justify-content-left">
+        <h1 class="text-h1 font-color text-center title">Создай свою книгу</h1>
+        </div>
+    </div>
+
+    <div class="booksConteinerMain">
+        <div class="container-fluid booksConteiner">
+            <form method="post" enctype="multipart/form-data" style="margin-left: 3%;" class="formBox">
+                {% csrf_token %}
+                <label>Название:</label><br>
+                {{ form.name }}<br>
+                <label>Краткое описание сюжета:</label><br>
+                {{ form.shortDescription }}<br>
+                
+                <button type="button" class="btn btn-info hint" data-bs-toggle="tooltip" data-bs-placement="left" title="Зажми CTRL и нажимай на жанры, если хочешь выбрать несколько">
+                    <div class="hintSumbol">?</div>
+                </button><br>
+                <label>Жанр(ы):</label><br>
+                {{ form.bookGenres }}<br>
+                <label>Обложка:</label><br>
+                {{ form.cover }}<br>
+                <label style="margin-top: 3%;">Комментарий автора:</label><br>
+                {{ form.description }}<br>
+                <label>Тематика:</label><br>
+                {{ form.topic }}<br>
+                <div class="btnBox"><input style="width: 20%;" class="btn btn-info" type="submit" value="Создать"></div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная{% endblock %}
+
+{% block main %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/main/main.css' %}">
+
+<div class="container-fluid headBlock">
+  <div class="row d-flex justify-content-left">
+    <h1 class="text-h1 font-color text-center title">Shelf</h1>
+  </div>
+</div>
+
+<div class="container-fluid searchBlock">
+  <div class="row d-flex justify-content-left searchBox">
+    <form action="{% url 'main' 'Search' %}" method="get" class="search">
+      <input name="q" type="text" placeholder="  Найти..." class="form-control">
+    </form>
+  </div>
+</div>
+
+<div class="container-fluid filterBlock">
+  <div class="row d-flex justify-content-left filterBtn">
+    <a href="{% url 'main' 'Popular' %}"
+      class="col-2 justify-content-center text-center booksListBtn btn btn-info"><b>Популярное</b></a>
+    <a href="{% url 'main' 'New' %}" class="col-2 justify-content-center text-center booksListBtn btn btn-info"><b>Новинки</b></a>
+    <div class="dropdown col-2 justify-content-center text-center booksListBtn btn btn-info" style="float:left;">
+      <div class="dropbtn"><b>Жанры</b></div>
+      <div class="dropdown-content" style="left:0;">
+        {% for key, value in genres.items %}
+          <a href="{% url 'main' filter=key %}">{{value}}</a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="booksConteinerMain">
+  <div class="container-fluid booksConteiner">
+    {% for obj in bookList %}
+    {% if obj.published == True %}
+    <div class="container-fluid booksBlock">
+      <div class="row d-flex justify-content-left booksBox">
+        <div class="col-2">
+          <div class="row justify-content-center align-items-start">
+            <div>
+              <a href="{% url 'book' id=obj.pk %}" style="text-decoration: none; color:black;">
+              <img src="/media/{{ obj.cover }}" class="bookImg" alt="">
+              <div class="text-center bookName"><b>{{ obj.name }}</b></div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-10">
+          <div class="bookParameters">
+
+            <div class="param">
+              <div class="row justify-content-start ms-1 me-1 gy-1" style="text-wrap: wrap;">
+                <div class=""><b>Автор: </b>
+                  {% for elem in autors %}
+                  {% if obj.autor|striptags == elem.username %}
+                  <a href="{% url 'profileAnyUser' id=elem.id filter='Written' %}" class="autorUrl">{{ elem.first_name }}</a>
+                  {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+            <div class="param">
+              <div class="row align-items-start ms-1 me-1 gy-1">
+                <div class=""><b>Тема: </b>{{ obj.topic }}</div>
+              </div>
+            </div>
+            <div class="param">
+              <div class="row align-items-start ms-1 me-1 gy-1">
+                <div class=""><b>Жанр(ы): </b>
+                  {% for elem in obj.bookGenres.all %}
+                  {{ elem }}{% if forloop.last == False %},{% else %}.{% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+            <div class="param">
+              <div class="row align-items-start ms-1 me-1 gy-1">
+                <div><b>Возрастной рейтинг: </b>{{ obj.ageLimit }}+</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-end likes"><img src="{% static 'img/main/like.png' %}">
+        {{ obj.like.count }}
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,165 @@
+.head{
+    margin-bottom: 1.5%;
+    margin-top: 1%;
+}
+
+.bookName{
+    font-size: 4vw;
+    font-family: 'Anticva';
+}
+
+.autorName{
+    font-size: 1vw;
+}
+
+.mainInfo{
+    margin-left: 3%;
+    text-wrap: wrap;
+    width: 96vw;
+}
+
+.bookText{
+    margin-left: 3%;
+    text-wrap: wrap;
+    width: 96vw;
+    text-indent: 2%;
+}
+
+.booksConteinerMain{
+    padding-top: 0.5vh;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.booksConteiner{
+    padding-top: 3%;
+    padding-bottom: 2%;
+    padding-left: 1%;
+    padding-right: 1%;
+    border-radius: 2vw;
+    background-color: #d5d8a5;
+    margin-bottom: 1.5vh;
+    padding-top: 0.5vh;
+    width: 85%;
+    border: solid 0.1vw black;
+}
+
+.title{
+    font-size: 3vw;
+    color: #e68282;
+    font-family: 'Anticva';
+}
+
+.font-color b{
+    color: #e68282;
+}
+
+.chapterBox{
+    margin-top: 1.5%;
+}
+
+.screensaverBox {
+    position: relative;
+    overflow: hidden;
+    margin-left: 10%;
+    margin-right: 10%;
+    
+}
+.screensaver {
+    width: 100%;
+    display: block;
+    height: auto;
+    filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.8));
+}
+.shadowImg {
+    position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          to bottom, 
+          rgba(213, 216, 165, 1) 0%, 
+          rgba(213, 216, 165, 0) 30%, 
+          rgba(213, 216, 165, 0) 75%, 
+          rgba(213, 216, 165, 1) 100%
+        ),
+        linear-gradient(
+          to right, 
+          rgba(213, 216, 165, 1) 0%, 
+          rgba(213, 216, 165, 0) 15%, 
+          rgba(213, 216, 165, 0) 85%, 
+          rgba(213, 216, 165, 1) 100%
+        );
+
+}
+
+.textChapter{
+    margin-left: 3%;
+    margin-right: 3%;
+    text-align: justify;
+}
+
+.textChapter p{
+    text-indent: 2vw;
+}
+
+.commentList{
+    margin-top: 1%;
+    margin-bottom: 1%;
+    padding: 1%;
+    padding-left: 1.5%;
+    margin-left: 10%;
+    width: 80%;
+    min-height: 10vh;
+    background-color: #e3e6e8;
+    border-radius: 2vw;
+}
+
+.commentHead{
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    display: flex;
+    margin: auto;
+    background-color: #d4d6d6;
+    border-radius: 2vw;
+    padding-left: 1%;
+    padding-right: 1%;
+}
+
+.commentDateTime{
+    font-size: 12px;
+}
+
+.commentList p{
+    text-indent: 2vw;
+    word-wrap: break-word;
+}
+
+.commentList form textarea{
+    width: 100%;
+    height: 8.5vh;
+    border-radius: 1vw;
+    text-indent: 1vw;
+    padding-left: 0.5%;
+    padding-right: 0.5%;
+    resize: none;
+}
+
+.btn-info{
+    border-color: #212121;
+    background-color: #c5a7df;
+    font-size: 0.8vw;
+    border-radius: 3vw;
+    cursor: pointer;
+    transition-property: scale, background-color;
+    transition-duration: 0.5s;
+    text-decoration: none;
+    color: black;
+}
+
+.btnBox{
+    display: flex;
+    justify-content: end;
+}

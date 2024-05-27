@@ -1,0 +1,91 @@
+.title{
+    font-family: 'Anticva';
+    font-size: 10vw;
+    color: #e68282;
+    margin-left: -10%;
+}
+
+body{
+    color: #212121 
+}
+
+.titleForm{
+    margin-bottom: -20px;
+}
+
+.logForm{
+    width: 120%; 
+    background-color: #d5d8a5;
+    border-radius: 7.5%;
+    margin-left: -10%;
+}
+
+.inputBox{
+    width: 70%;
+    margin-left: 15%;
+}
+
+.form-control{
+    background-color: white ;
+    border-radius: 7.5% / 50%;
+}
+
+label{
+    margin-left: 5%;
+}
+
+.error{
+    margin-left: 15%;
+}
+
+.btn{
+    font-size: 20px;
+    background-color: #c5a7df ;
+}
+
+.btn-info{
+    border-color: #212121;
+}
+
+.lostPas{
+    margin-left: 14%;
+}
+
+a{
+    text-decoration: none;
+    color:rgb(47, 0, 255)
+}
+
+a:hover{
+    color:rgb(56, 126, 255)
+}
+
+.reg{
+    margin-left: 5%;
+}
+
+.valid{
+    font-size: 12px;
+    color: rgb(141, 0, 0);
+}
+
+.hint{
+    width: 25px; 
+    height: 25px;
+    background: #c5a7df;
+    border-radius: 50%;
+    font-size: 15px;
+    margin-left: -10px;
+    margin-bottom: -10px;
+    background-color:#c5a7df;
+}
+
+.hintSumbol{
+    margin-left: -5px;
+    margin-top: -5px;
+}
+
+.resetText{
+    margin-left: 20px;
+    margin-right: 20px;
+}
