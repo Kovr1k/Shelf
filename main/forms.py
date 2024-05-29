@@ -8,8 +8,24 @@ class bookForm(ModelForm):
         fields = ['name', 'bookGenres', 'cover', 'description', 'shortDescription', 'topic']
 
         widgets = {
-            
+            "description": Textarea(attrs={
+                'class': 'form-control',
+                'style': 'height: 15vh;',
+            }),
+            "shortDescription": Textarea(attrs={
+                'class': 'form-control',
+                'style': 'height: 15vh;',
+            }),
+            "name": TextInput(attrs={
+                'class': 'form-control',
+                'style': ''
+            }),
+            "topic": TextInput(attrs={
+                'class': 'form-control',
+                'style': ''
+            }),
         }
+
     def __init__(self, *args, **kwargs):
         super(bookForm, self).__init__(*args, **kwargs)
         self.fields['shortDescription'].widget = Textarea(attrs={

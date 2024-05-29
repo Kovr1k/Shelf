@@ -14,7 +14,7 @@ class BookGenres(models.Model):
 class Book(models.Model):
     name = models.CharField("Название", max_length=100, default='')
     bookGenres = models.ManyToManyField(BookGenres)
-    dateOfPublication = models.DateField("Дата публикации", null=True, blank=True)
+    dateOfPublication = models.DateField("Дата публикации", null=True, blank=True, default=timezone.now)
     autor = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     cover = models.ImageField("Обложка", upload_to='covers', blank=True)
     description = models.TextField("Описание", max_length=3500, default="")

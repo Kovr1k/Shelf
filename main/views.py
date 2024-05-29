@@ -6,6 +6,7 @@ from transliterate import translit, get_available_language_codes
 from django.db.models import Q
 from accounts.models import UserData
 from .forms import *
+from django.utils import timezone
 
     # Получение ID пользователя
     # current_user = request.user
@@ -125,8 +126,6 @@ class BookPage(View):
                 if form.is_valid():
                     if book.published == False:
                         book.published = True
-                    elif book.published == True:
-                        book.published = False
                     book.save()
                     return redirect('book', id=id)    
             form = bookPublishedBtn()
