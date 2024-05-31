@@ -1,0 +1,5 @@
+Django
+django_cleanup
+psycopg2-binary
+transliterate
+Pillow
