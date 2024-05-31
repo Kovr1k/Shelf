@@ -1,52 +1,31 @@
-name: Django CI/CD
+name: Deploy to VPS
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 4
-      matrix:
-        python-version: [3.12]
-
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Change to Shelf directory
-      run: cd ../../
-    - name: Install Dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-    # Добавьте дополнительные шаги для тестирования, если необходимо
-    - name: Configure Docker Registry Mirror
-      run: |
-        mkdir -p /etc/docker
-        echo '{"registry-mirrors": ["https://mirror.gcr.io", "https://daocloud.io", "https://c.163.com/", "https://huecker.io/", "https://registry.docker-cn.com"]}' | sudo tee /etc/docker/daemon.json
-        sudo service docker restart
-    
-    - name: Build Docker Image
-      run: docker build -t shelfapp .
-    - name: Deploy to VPS
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: SSH and git pull on VPS
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.VPS_HOST }}
         username: ${{ secrets.VPS_USERNAME }}
         password: ${{ secrets.VPS_PASSWORD }}
         script: |
-          mkdir -p /etc/docker
-          echo '{"registry-mirrors": ["https://mirror.gcr.io", "https://daocloud.io", "https://c.163.com/", "https://huecker.io/", "https://registry.docker-cn.com"]}' | sudo tee /etc/docker/daemon.json
-          sudo service docker restart
+          cd ~/Shelf
+          git pull
+          
+          docker build -t shelfapp .
+          
           container_id=$(docker ps -qf "ancestor=shelfapp")
           docker stop $container_id || true
           docker rm $container_id || true
-          docker pull shelfapp:latest
+          
           docker run --net=host --name shelfapp shelfapp:latest
