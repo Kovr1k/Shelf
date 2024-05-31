@@ -1,4 +1,4 @@
-name: Django CI
+name: Django CI/CD
 
 on:
   push:
@@ -7,19 +7,8 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-
+  build-and-deploy:
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:14
-        env:
-          POSTGRES_DB: Shelf
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: root
-        ports:
-          - 5432:5432
-    
     strategy:
       max-parallel: 4
       matrix:
@@ -32,11 +21,22 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     - name: Change to Shelf directory
-      run: cd ../../
+      run: cd Shelf
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-    - name: Run
-      run: |
-        python manage.py runserver 0.0.0.0:8000
+    # Добавьте дополнительные шаги для тестирования, если необходимо
+    - name: Build Docker Image
+      run: docker build -t shelfapp .
+    - name: Deploy to VPS
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.194.169.160.205 }}
+        username: ${{ secrets.root }}
+        password: ${{ secrets.a1c38f8f578d7b! }}
+        script: |
+          docker stop shelfapp || true
+          docker rm shelfapp || true
+          docker pull shelfapp:latest
+          docker run --net=host shelfapp
