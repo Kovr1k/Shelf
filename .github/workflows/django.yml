@@ -22,7 +22,7 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     - name: Change to Shelf directory
-      run: cd Shelf
+      run: cd ../../
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
