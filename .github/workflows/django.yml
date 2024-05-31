@@ -22,10 +22,14 @@ jobs:
           cd ~/Shelf
           git pull
           
-          docker build -t shelfapp .
           
+          # Получаем идентификатор текущего запущенного контейнера
           container_id=$(docker ps -qf "ancestor=shelfapp")
-          docker stop $container_id || true
-          docker rm $container_id || true
-          
+          # Если контейнер существует, останавливаем и удаляем его
+          if [ ! -z "$container_id" ]; then
+            docker stop $container_id
+            docker rm $container_id
+          fi
+          # Строим новый образ и запускаем контейнер с уникальным именем
+          docker build -t shelfapp .
           docker run --net=host --name shelfapp shelfapp:latest
