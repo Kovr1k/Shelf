@@ -32,9 +32,9 @@ jobs:
     - name: Deploy to VPS
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.194.169.160.205 }}
-        username: ${{ secrets.root }}
-        password: ${{ secrets.a1c38f8f578d7b! }}
+        host: ${{ secrets.VPS_HOST }}
+        username: ${{ secrets.VPS_USERNAME }}
+        password: ${{ secrets.VPS_PASSWORD }}
         script: |
           docker stop shelfapp || true
           docker rm shelfapp || true
