@@ -42,7 +42,8 @@ jobs:
         username: ${{ secrets.VPS_USERNAME }}
         password: ${{ secrets.VPS_PASSWORD }}
         script: |
-          docker stop shelfapp || true
-          docker rm shelfapp || true
+          container_id=$(docker ps -qf "ancestor=shelfapp")
+          docker stop $container_id || true
+          docker rm $container_id || true
           docker pull shelfapp:latest
-          docker run --net=host shelfapp
+          docker run --net=host --name shelfapp shelfapp:latest
