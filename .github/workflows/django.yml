@@ -21,11 +21,12 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
+    - name: Change to Shelf directory
+      run: cd Shelf
     - name: Install Dependencies
       run: |
-        cd Shelf
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-    - name: Run Delpoy
+    - name: Run Gunicorn
       run: |
-        python manage.py runserver 0.0.0.0:8000
+        gunicorn your_project.wsgi:application --bind 0.0.0.0:8000
