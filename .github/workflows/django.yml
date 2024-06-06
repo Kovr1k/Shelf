@@ -21,7 +21,10 @@ jobs:
         script: |
           cd ~/Shelf
           git pull
-          python3 manage.py test
+          if ! python3 manage.py test; then
+            echo "Tests failed, stopping the script."
+            exit 1
+          fi
           
           # Получаем идентификатор текущего запущенного контейнера
           container_id=$(docker ps -qf "ancestor=shelfapp")
