@@ -21,7 +21,7 @@ jobs:
         script: |
           cd ~/Shelf
           git pull
-          
+          python3 manage.py test
           
           # Получаем идентификатор текущего запущенного контейнера
           container_id=$(docker ps -qf "ancestor=shelfapp")
@@ -32,4 +32,4 @@ jobs:
           fi
           # Строим новый образ и запускаем контейнер с уникальным именем
           docker build -t shelfapp .
-          docker run --net=host --name shelfapp shelfapp:latest
+          docker run -d --net=host --name shelfapp shelfapp:latest
