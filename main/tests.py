@@ -18,5 +18,5 @@ class SimpleTests(TestCase):
 
     def test_home_page_does_not_contain_incorrect_html(self):
         # Тест на отсутствие неправильного HTML на главной странице
-        response = self.client.get('/New/', follow=True)
+        response = self.client.get('/books/createBook/', follow=True)
         self.assertNotContains(response, 'Nigger')
