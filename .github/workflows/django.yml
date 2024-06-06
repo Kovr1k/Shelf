@@ -12,17 +12,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.8' # Укажите версию Python, которая соответствует вашему проекту
-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        
-    - name: Git pull
+    - name: SSH and git pull on VPS
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.VPS_HOST }}
@@ -31,22 +21,15 @@ jobs:
         script: |
           cd ~/Shelf
           git pull
-
-    - name: Run Django tests
-      run: python3 manage.py test
-
-    - name: SSH and git pull on VPS
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.VPS_HOST }}
-        username: ${{ secrets.VPS_USERNAME }}
-        password: ${{ secrets.VPS_PASSWORD }}
-        script: |
+          python3 manage.py test
+          
+          # Получаем идентификатор текущего запущенного контейнера
           container_id=$(docker ps -qf "ancestor=shelfapp")
+          # Если контейнер существует, останавливаем и удаляем его
           if [ ! -z "$container_id" ]; then
             docker stop $container_id
             docker rm $container_id
           fi
-          
+          # Строим новый образ и запускаем контейнер с уникальным именем
           docker build -t shelfapp .
           docker run -d --net=host --name shelfapp shelfapp:latest
